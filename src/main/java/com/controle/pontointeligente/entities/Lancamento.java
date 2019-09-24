@@ -1,18 +1,30 @@
 package com.controle.pontointeligente.entities;
 
-import com.controle.pontointeligente.enums.TipoEnum;
-import org.springframework.data.annotation.Id;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import com.controle.pontointeligente.enums.TipoEnum;
 
 
 @Entity
 @Table(name = "lancamento")
 public class Lancamento implements Serializable {
 
-    private static final long serialVersionUID = -6524560251526772839L;
+    private static final long serialVersionUID = 6524560251526772839L;
 
     private Long id;
     private Date data;
@@ -20,15 +32,14 @@ public class Lancamento implements Serializable {
     private String localizacao;
     private Date dataCriacao;
     private Date dataAtualizacao;
-    private TipoEnum tipoEnum;
+    private TipoEnum tipo;
     private Funcionario funcionario;
 
     public Lancamento() {
-
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public Long getId() {
         return id;
     }
@@ -37,8 +48,6 @@ public class Lancamento implements Serializable {
         this.id = id;
     }
 
-    //@tempora e o temporalType serve para indentificar que
-    // quero gravar a data e a hora
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data", nullable = false)
     public Date getData() {
@@ -49,7 +58,7 @@ public class Lancamento implements Serializable {
         this.data = data;
     }
 
-    @Column(name = "descricao")
+    @Column(name = "descricao", nullable = true)
     public String getDescricao() {
         return descricao;
     }
@@ -58,7 +67,7 @@ public class Lancamento implements Serializable {
         this.descricao = descricao;
     }
 
-    @Column(name = "localizacao", nullable = false)
+    @Column(name = "localizacao", nullable = true)
     public String getLocalizacao() {
         return localizacao;
     }
@@ -76,7 +85,7 @@ public class Lancamento implements Serializable {
         this.dataCriacao = dataCriacao;
     }
 
-    @Column(name = "data_atualizacao")
+    @Column(name = "data_atualizacao", nullable = false)
     public Date getDataAtualizacao() {
         return dataAtualizacao;
     }
@@ -87,12 +96,12 @@ public class Lancamento implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo", nullable = false)
-    public TipoEnum getTipoEnum() {
-        return tipoEnum;
+    public TipoEnum getTipo() {
+        return tipo;
     }
 
-    public void setTipoEnum(TipoEnum tipoEnum) {
-        this.tipoEnum = tipoEnum;
+    public void setTipo(TipoEnum tipo) {
+        this.tipo = tipo;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -105,12 +114,12 @@ public class Lancamento implements Serializable {
     }
 
     @PreUpdate
-    public void preUpdate(){
+    public void preUpdate() {
         dataAtualizacao = new Date();
     }
 
     @PrePersist
-    public void prePesist(){
+    public void prePersist() {
         final Date atual = new Date();
         dataCriacao = atual;
         dataAtualizacao = atual;
@@ -118,15 +127,9 @@ public class Lancamento implements Serializable {
 
     @Override
     public String toString() {
-        return "Lancamento{" +
-                "id=" + id +
-                ", data=" + data +
-                ", descricao='" + descricao + '\'' +
-                ", localizacao='" + localizacao + '\'' +
-                ", dataCriacao=" + dataCriacao +
-                ", dataAtualizacao=" + dataAtualizacao +
-                ", tipoEnum=" + tipoEnum +
-                ", funcionario=" + funcionario +
-                '}';
+        return "Lancamento [id=" + id + ", data=" + data + ", descricao=" + descricao + ", localizacao=" + localizacao
+                + ", dataCriacao=" + dataCriacao + ", dataAtualizacao=" + dataAtualizacao + ", tipo=" + tipo
+                + ", funcionario=" + funcionario + "]";
     }
+
 }
