@@ -127,7 +127,7 @@ public class Lancamento implements Serializable {
 
     @Override
     public String toString() {
-        return "Lancamento [id=" + id + ", data=" + data + ", descricao=" + descricao + ", localizacao=" + localizacao
+        return "LancamentoService [id=" + id + ", data=" + data + ", descricao=" + descricao + ", localizacao=" + localizacao
                 + ", dataCriacao=" + dataCriacao + ", dataAtualizacao=" + dataAtualizacao + ", tipo=" + tipo
                 + ", funcionario=" + funcionario + "]";
     }
