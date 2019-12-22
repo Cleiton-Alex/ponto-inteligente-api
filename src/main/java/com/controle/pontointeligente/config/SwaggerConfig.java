@@ -43,7 +43,7 @@ public class SwaggerConfig {
 
         String swaggerToken;
         try {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername("seuemail@email.com");
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername("admin@cleiton.com");
             swaggerToken = this.jwtTokenUtil.obterToken(userDetails);
         } catch (Exception e) {
             swaggerToken = "";
